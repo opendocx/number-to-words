@@ -36,7 +36,7 @@ converter.toWords(2.9); // => “two”
 converter.toWords(-3); // => “minus three”
 
 // Large numbers:
-converter.toWords(9007199254740992); // => “nine quadrillion, seven trillion, one hundred ninety-nine billion, two hundred fifty-four million, seven hundred forty thousand, nine hundred ninety-two”
+converter.toWords(9007199254740992); // => “nine quadrillion seven trillion one hundred ninety-nine billion two hundred fifty-four million seven hundred forty thousand nine hundred ninety-two”
 ```
 
 #### `toWordsOrdinal(number)`
