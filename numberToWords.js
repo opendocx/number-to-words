@@ -13,12 +13,12 @@
         typeof global == 'object' && global.global === global && global ||
         this;
 
-    // ========== file: /src/maxSafeInteger.js ==========
+    // ========== file: \src\maxSafeInteger.js ==========
 
 var MAX_SAFE_INTEGER = 9007199254740991;
 
 
-// ========== file: /src/isFinite.js ==========
+// ========== file: \src\isFinite.js ==========
 
 // Simplified https://gist.github.com/marlun78/885eb0021e980c6ce0fb
 function isFinite(value) {
@@ -26,7 +26,7 @@ function isFinite(value) {
 }
 
 
-// ========== file: /src/isSafeNumber.js ==========
+// ========== file: \src\isSafeNumber.js ==========
 
 
 function isSafeNumber(value) {
@@ -34,7 +34,8 @@ function isSafeNumber(value) {
 }
 
 
-// ========== file: /src/makeOrdinal.js ==========
+// ========== file: \src\makeOrdinal.js ==========
+
 
 var ENDS_WITH_DOUBLE_ZERO_PATTERN = /(hundred|thousand|(m|b|tr|quadr)illion)$/;
 var ENDS_WITH_TEEN_PATTERN = /teen$/;
@@ -83,7 +84,7 @@ function replaceWithOrdinalVariant(match, numberWord) {
 }
 
 
-// ========== file: /src/toOrdinal.js ==========
+// ========== file: \src\toOrdinal.js ==========
 
 
 /**
@@ -118,7 +119,7 @@ function toOrdinal(number) {
 }
 
 
-// ========== file: /src/toWords.js ==========
+// ========== file: \src\toWords.js ==========
 
 
 var TEN = 10;
@@ -158,7 +159,7 @@ function toWords(number, asOrdinal) {
     }
     if (!isSafeNumber(num)) {
         throw new RangeError(
-            'Input is not a safe number, it’s either too large or too small.'
+            'Input is not a safe number; it’s either too large or too small.'
         );
     }
     words = generateWords(num);
@@ -171,7 +172,7 @@ function generateWords(number) {
 
     // We’re done
     if (number === 0) {
-        return !words ? 'zero' : words.join(' ').replace(/,$/, '');
+        return !words ? 'zero' : words.join(' ');
     }
     // First run
     if (!words) {
@@ -202,24 +203,24 @@ function generateWords(number) {
 
     } else if (number < ONE_MILLION) {
         remainder = number % ONE_THOUSAND;
-        word = generateWords(Math.floor(number / ONE_THOUSAND)) + ' thousand,';
+        word = generateWords(Math.floor(number / ONE_THOUSAND)) + ' thousand';
 
     } else if (number < ONE_BILLION) {
         remainder = number % ONE_MILLION;
-        word = generateWords(Math.floor(number / ONE_MILLION)) + ' million,';
+        word = generateWords(Math.floor(number / ONE_MILLION)) + ' million';
 
     } else if (number < ONE_TRILLION) {
         remainder = number % ONE_BILLION;
-        word = generateWords(Math.floor(number / ONE_BILLION)) + ' billion,';
+        word = generateWords(Math.floor(number / ONE_BILLION)) + ' billion';
 
     } else if (number < ONE_QUADRILLION) {
         remainder = number % ONE_TRILLION;
-        word = generateWords(Math.floor(number / ONE_TRILLION)) + ' trillion,';
+        word = generateWords(Math.floor(number / ONE_TRILLION)) + ' trillion';
 
     } else if (number <= MAX) {
         remainder = number % ONE_QUADRILLION;
         word = generateWords(Math.floor(number / ONE_QUADRILLION)) +
-        ' quadrillion,';
+        ' quadrillion';
     }
 
     words.push(word);
@@ -227,7 +228,10 @@ function generateWords(number) {
 }
 
 
-// ========== file: /src/toWordsOrdinal.js ==========
+// ========== file: \src\toWordsOrdinal.js ==========
+
+
+
 
 
 /**

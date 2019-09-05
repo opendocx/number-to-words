@@ -43,7 +43,11 @@ describe('toWordsOrdinal', function () {
         { input: '90', expect: 'ninetieth' },
         { input: '100', expect: 'one hundredth' },
         { input: '1000', expect: 'one thousandth' },
+        { input: '1100', expect: 'one thousand one hundredth' },
+        { input: '1111', expect: 'one thousand one hundred eleventh' },
         { input: '1000000', expect: 'one millionth' },
+        { input: '2000000', expect: 'two millionth' },
+        { input: '2222222', expect: 'two million two hundred twenty-two thousand two hundred twenty-second' },
         { input: '1000000000', expect: 'one billionth' },
         { input: '1000000000000', expect: 'one trillionth' },
         { input: '1000000000000000', expect: 'one quadrillionth' }
