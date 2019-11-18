@@ -2,6 +2,8 @@
 
 var toWordsOrdinal = typeof require !== 'undefined' ? require('../src/toWordsOrdinal') : window.numberToWords.toWordsOrdinal;
 
+var options = { useCommas: false, negativePrefix: 'negative' }
+
 describe('toWordsOrdinal', function () {
     var tests = [
         { input: '0', expect: 'zeroth' },
@@ -43,12 +45,12 @@ describe('toWordsOrdinal', function () {
         { input: '90', expect: 'ninetieth' },
         { input: '100', expect: 'one hundredth' },
         { input: '1000', expect: 'one thousandth' },
-        { input: '1100', expect: 'one thousand, one hundredth' },
-        { input: '1111', expect: 'one thousand, one hundred eleventh' },
-        { input: '1234', expect: 'one thousand, two hundred thirty-fourth' },
+        { input: '1100', expect: 'one thousand one hundredth' },
+        { input: '1111', expect: 'one thousand one hundred eleventh' },
+        { input: '1234', expect: 'one thousand two hundred thirty-fourth' },
         { input: '1000000', expect: 'one millionth' },
         { input: '2000000', expect: 'two millionth' },
-        { input: '2222222', expect: 'two million, two hundred twenty-two thousand, two hundred twenty-second' },
+        { input: '2222222', expect: 'two million two hundred twenty-two thousand two hundred twenty-second' },
         { input: '1000000000', expect: 'one billionth' },
         { input: '1000000000000', expect: 'one trillionth' },
         { input: '1000000000000000', expect: 'one quadrillionth' }
@@ -56,7 +58,7 @@ describe('toWordsOrdinal', function () {
 
     function addTest(test) {
         it('should, if passed "' + test.input + '", return "' + test.expect + '"', function () {
-            expect(toWordsOrdinal(test.input)).toEqual(test.expect);
+            expect(toWordsOrdinal(test.input, options)).toEqual(test.expect);
         });
     }
 
