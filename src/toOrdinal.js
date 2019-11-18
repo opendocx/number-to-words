@@ -20,7 +20,7 @@ function toOrdinal(number) {
     }
     if (!isSafeNumber(num)) {
         throw new RangeError(
-            'Input is not a safe number, it’s either too large or too small.'
+            'Input is not a safe number; it’s either too large or too small.'
         );
     }
     var str = String(num);

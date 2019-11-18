@@ -13,12 +13,12 @@
         typeof global == 'object' && global.global === global && global ||
         this;
 
-    // ========== file: /src/maxSafeInteger.js ==========
+    // ========== file: \src\maxSafeInteger.js ==========
 
 var MAX_SAFE_INTEGER = 9007199254740991;
 
 
-// ========== file: /src/isFinite.js ==========
+// ========== file: \src\isFinite.js ==========
 
 // Simplified https://gist.github.com/marlun78/885eb0021e980c6ce0fb
 function isFinite(value) {
@@ -26,7 +26,7 @@ function isFinite(value) {
 }
 
 
-// ========== file: /src/isSafeNumber.js ==========
+// ========== file: \src\isSafeNumber.js ==========
 
 
 function isSafeNumber(value) {
@@ -34,7 +34,8 @@ function isSafeNumber(value) {
 }
 
 
-// ========== file: /src/makeOrdinal.js ==========
+// ========== file: \src\makeOrdinal.js ==========
+
 
 var ENDS_WITH_DOUBLE_ZERO_PATTERN = /(hundred|thousand|(m|b|tr|quadr)illion)$/;
 var ENDS_WITH_TEEN_PATTERN = /teen$/;
@@ -83,7 +84,7 @@ function replaceWithOrdinalVariant(match, numberWord) {
 }
 
 
-// ========== file: /src/toOrdinal.js ==========
+// ========== file: \src\toOrdinal.js ==========
 
 
 /**
@@ -103,7 +104,7 @@ function toOrdinal(number) {
     }
     if (!isSafeNumber(num)) {
         throw new RangeError(
-            'Input is not a safe number, it’s either too large or too small.'
+            'Input is not a safe number; it’s either too large or too small.'
         );
     }
     var str = String(num);
@@ -118,7 +119,7 @@ function toOrdinal(number) {
 }
 
 
-// ========== file: /src/toWords.js ==========
+// ========== file: \src\toWords.js ==========
 
 
 var TEN = 10;
@@ -144,10 +145,18 @@ var TENTHS_LESS_THAN_HUNDRED = [
  * If number is decimal, the decimals will be removed.
  * @example toWords(12) => 'twelve'
  * @param {number|string} number
- * @param {boolean} [asOrdinal] - Deprecated, use toWordsOrdinal() instead!
+ * @param {object} [options]
  * @returns {string}
  */
-function toWords(number, asOrdinal) {
+function toWords(number, options) {
+    var asOrdinal = false;
+    if (typeof options !== 'object' || !options) {
+        asOrdinal = options // support deprecated 2nd param for backward compatibility
+        options = { useCommas: true, negativePrefix: 'minus' } // default options for backward compatibility
+    } else {
+        if (typeof options.negativePrefix !== 'string') options.negativePrefix = 'minus'
+        options.useCommas = Boolean(options.useCommas)
+    }
     var words;
     var num = parseInt(number, 10);
 
@@ -158,20 +167,24 @@ function toWords(number, asOrdinal) {
     }
     if (!isSafeNumber(num)) {
         throw new RangeError(
-            'Input is not a safe number, it’s either too large or too small.'
+            'Input is not a safe number; it’s either too large or too small.'
         );
     }
-    words = generateWords(num);
+    words = generateWords(num, options);
     return asOrdinal ? makeOrdinal(words) : words;
 }
 
-function generateWords(number) {
-    var remainder, word,
-        words = arguments[1];
+function generateWords(number, options) {
+    var remainder, word, temp,
+        words = arguments[2],
+        comma = options.useCommas ? ',' : '';
 
     // We’re done
     if (number === 0) {
-        return !words ? 'zero' : words.join(' ').replace(/,$/, '');
+        if (!words) return 'zero';
+        temp = words.join(' ');
+        if (options.useCommas) temp = temp.replace(/,$/, '');
+        return temp;
     }
     // First run
     if (!words) {
@@ -179,7 +192,7 @@ function generateWords(number) {
     }
     // If negative, prepend “minus”
     if (number < 0) {
-        words.push('minus');
+        words.push(options.negativePrefix);
         number = Math.abs(number);
     }
 
@@ -202,24 +215,24 @@ function generateWords(number) {
 
     } else if (number < ONE_MILLION) {
         remainder = number % ONE_THOUSAND;
-        word = generateWords(Math.floor(number / ONE_THOUSAND)) + ' thousand,';
+        word = generateWords(Math.floor(number / ONE_THOUSAND)) + ' thousand' + comma;
 
     } else if (number < ONE_BILLION) {
         remainder = number % ONE_MILLION;
-        word = generateWords(Math.floor(number / ONE_MILLION)) + ' million,';
+        word = generateWords(Math.floor(number / ONE_MILLION)) + ' million' + comma;
 
     } else if (number < ONE_TRILLION) {
         remainder = number % ONE_BILLION;
-        word = generateWords(Math.floor(number / ONE_BILLION)) + ' billion,';
+        word = generateWords(Math.floor(number / ONE_BILLION)) + ' billion' + comma;
 
     } else if (number < ONE_QUADRILLION) {
         remainder = number % ONE_TRILLION;
-        word = generateWords(Math.floor(number / ONE_TRILLION)) + ' trillion,';
+        word = generateWords(Math.floor(number / ONE_TRILLION)) + ' trillion' + comma;
 
     } else if (number <= MAX) {
         remainder = number % ONE_QUADRILLION;
         word = generateWords(Math.floor(number / ONE_QUADRILLION)) +
-        ' quadrillion,';
+        ' quadrillion' + comma;
     }
 
     words.push(word);
@@ -227,17 +240,21 @@ function generateWords(number) {
 }
 
 
-// ========== file: /src/toWordsOrdinal.js ==========
+// ========== file: \src\toWordsOrdinal.js ==========
+
+
+
 
 
 /**
  * Converts a number into ordinal words.
  * @example toWordsOrdinal(12) => 'twelfth'
  * @param {number|string} number
+ * @param {object} options
  * @returns {string}
  */
-function toWordsOrdinal(number) {
-    var words = toWords(number);
+function toWordsOrdinal(number, options) {
+    var words = toWords(number, options);
     return makeOrdinal(words);
 }
 
