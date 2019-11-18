@@ -1,6 +1,6 @@
 
 
-[![NPM](https://nodei.co/npm/number-to-words.png)](https://www.npmjs.com/package/number-to-words)
+[![NPM](https://nodei.co/npm/number-to-words-en.png)](https://www.npmjs.com/package/number-to-words-en)
 
 
 # Number To Words
@@ -9,7 +9,7 @@ ordinal numbers.
 
 
 ### Install
-`npm install number-to-words`
+`npm install number-to-words-en`
 
 
 ### API
@@ -18,15 +18,15 @@ ordinal numbers.
 Converts an integer into a string with an ordinal postfix.
 If number is decimal, the decimals will be removed.
 ```js
-var converter = require('number-to-words');
+var converter = require('number-to-words-en');
 converter.toOrdinal(21); // => “21st”
 ```
 
-#### `toWords(number)`
+#### `toWords(number, options)`
 Converts an integer into words.
 If number is decimal, the decimals will be removed.
 ```js
-var converter = require('number-to-words');
+var converter = require('number-to-words-en');
 converter.toWords(13); // => “thirteen”
 
 // Decimal numbers:
@@ -39,14 +39,27 @@ converter.toWords(-3); // => “minus three”
 converter.toWords(9007199254740992); // => “nine quadrillion, seven trillion, one hundred ninety-nine billion, two hundred fifty-four million, seven hundred forty thousand, nine hundred ninety-two”
 ```
 
-#### `toWordsOrdinal(number)`
+#### `toWordsOrdinal(number, options)`
 Converts a number into ordinal words.
 If number is decimal, the decimals will be removed.
 ```js
-var converter = require('number-to-words');
+var converter = require('number-to-words-en');
 converter.toWordsOrdinal(21); // => “twenty-first”
 ```
 
+#### Options
+An object to specify alternative behavior for conversion of numbers to words. Available options are:
+```js
+{
+    useCommas: true, // a boolean value indicating whether the spelled numbers should include commas (default is true)
+    negativePrefix: 'minus' // the string to use at the beginning of a negative number (default is 'minus')
+}
+```
+For example:
+```js
+var converter = require('number-to-words-en');
+converter.toWords(-1234, { useCommas: false, negativePrefix: 'negative' }); // => “negative one thousand two hundred thirty-four”
+```
 
 ### Contributions, Comments and Bugs
 Contributions, comments and/or bug reports are much appreciated. Open a pull request or add comments on the
@@ -59,7 +72,10 @@ See [roadmap](ROADMAP.md) for details.
 
 ### Change Log
 
-##### Version 1.2.4 (final 1.x release)
+##### Version 1.2.5
+- addition of `options` object. If second argument is not an object, it still behaves like former (deprecated) `asOrdinal` parameter.
+
+##### Version 1.2.4
 - Bug fix in `toOrdinal`. When passed -11, -12 and -13 it returned an incorrect suffix ([#15](https://github.com/marlun78/number-to-words/issues/15)). Thanks to @dmrzn.
 - `toOrdinal` and `toWords` now throws a more precise error when passed an unsafe number ([#13](https://github.com/marlun78/number-to-words/pull/13)). Thanks to @adrianomelo.
 

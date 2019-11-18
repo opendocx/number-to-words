@@ -1,9 +1,9 @@
 /*!
  * Number-To-Words util
- * @version v1.2.4
+ * @version v1.2.5
  * @link https://github.com/marlun78/number-to-words
  * @author Martin Eneqvist (https://github.com/marlun78)
- * @contributors Aleksey Pilyugin (https://github.com/pilyugin),Jeremiah Hall (https://github.com/jeremiahrhall),Adriano Melo (https://github.com/adrianomelo),dmrzn (https://github.com/dmrzn)
+ * @contributors Aleksey Pilyugin (https://github.com/pilyugin),Jeremiah Hall (https://github.com/jeremiahrhall),Adriano Melo (https://github.com/adrianomelo),dmrzn (https://github.com/dmrzn),Lowell Stewart (https://github.com/opendocx)
  * @license MIT
  */
 (function () {
@@ -190,7 +190,7 @@ function generateWords(number, options) {
     if (!words) {
         words = [];
     }
-    // If negative, prepend “minus”
+    // If negative, prepend negativePrefix (“minus” is default)
     if (number < 0) {
         words.push(options.negativePrefix);
         number = Math.abs(number);
@@ -211,32 +211,32 @@ function generateWords(number, options) {
 
     } else if (number < ONE_THOUSAND) {
         remainder = number % ONE_HUNDRED;
-        word = generateWords(Math.floor(number / ONE_HUNDRED)) + ' hundred';
+        word = generateWords(Math.floor(number / ONE_HUNDRED), options) + ' hundred';
 
     } else if (number < ONE_MILLION) {
         remainder = number % ONE_THOUSAND;
-        word = generateWords(Math.floor(number / ONE_THOUSAND)) + ' thousand' + comma;
+        word = generateWords(Math.floor(number / ONE_THOUSAND), options) + ' thousand' + comma;
 
     } else if (number < ONE_BILLION) {
         remainder = number % ONE_MILLION;
-        word = generateWords(Math.floor(number / ONE_MILLION)) + ' million' + comma;
+        word = generateWords(Math.floor(number / ONE_MILLION), options) + ' million' + comma;
 
     } else if (number < ONE_TRILLION) {
         remainder = number % ONE_BILLION;
-        word = generateWords(Math.floor(number / ONE_BILLION)) + ' billion' + comma;
+        word = generateWords(Math.floor(number / ONE_BILLION), options) + ' billion' + comma;
 
     } else if (number < ONE_QUADRILLION) {
         remainder = number % ONE_TRILLION;
-        word = generateWords(Math.floor(number / ONE_TRILLION)) + ' trillion' + comma;
+        word = generateWords(Math.floor(number / ONE_TRILLION), options) + ' trillion' + comma;
 
     } else if (number <= MAX) {
         remainder = number % ONE_QUADRILLION;
-        word = generateWords(Math.floor(number / ONE_QUADRILLION)) +
+        word = generateWords(Math.floor(number / ONE_QUADRILLION), options) +
         ' quadrillion' + comma;
     }
 
     words.push(word);
-    return generateWords(remainder, words);
+    return generateWords(remainder, options, words);
 }
 
 

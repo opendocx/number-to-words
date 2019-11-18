@@ -1,7 +1,7 @@
 {
-    "name": "number-to-words",
+    "name": "number-to-words-en",
     "description": "Contains some util methods for converting numbers into words, ordinal words and ordinal numbers.",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "main": "./src",
     "browser": "./numberToWords.min.js",
     "author": "Martin Eneqvist (https://github.com/marlun78)",
@@ -9,7 +9,8 @@
         "Aleksey Pilyugin (https://github.com/pilyugin)",
         "Jeremiah Hall (https://github.com/jeremiahrhall)",
         "Adriano Melo (https://github.com/adrianomelo)",
-        "dmrzn (https://github.com/dmrzn)"
+        "dmrzn (https://github.com/dmrzn)",
+        "Lowell Stewart (https://github.com/opendocx)"
     ],
     "devDependencies": {
         "eslint": "5.3.0",
@@ -35,7 +36,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/marlun78/number-to-words"
+        "url": "https://github.com/opendocx/number-to-words"
     },
     "license": "MIT",
     "bugs": {
